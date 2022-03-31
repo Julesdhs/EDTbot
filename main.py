@@ -26,7 +26,7 @@ def journee():
 
 
 if __name__ == "__main__":
-    schedule.every().day.at('00:15').do(lambda: journee())
+    schedule.every().day.at('00:20').do(lambda: journee())
     # Spin up a thread to run the schedule check so it doesn't block your bot.
     # This will take the function schedule_checker which will check every second
     # to see if the scheduled job needs to be ran.
