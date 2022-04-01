@@ -3,25 +3,12 @@ import datetime
 
 class Cours():
 
-    @staticmethod
-    # méthode qui retourne l'heure donnée moins 10 minutes dans le format particulier, fonctionne mal mais assez
-    def heuremoins10(heure):
-        min = int(heure[2:4])
-        if min >= 10:
-            min2 = min-10
-            return(str.format("{}{}", heure[0:2], min2))
-        h2 = int(heure[0:2])-1
-        if h2 <= 10:
-            h2 = str.format('0{}', h2)
-        min2 = '50'
-        return(str.format("{}{}", h2, min2))
-
     @ staticmethod
-    def coursdujour():  # méthode qui retourne les cours du jour
+    def coursdujour():  # méthode qui retourne les cours du jour à partir du fichier output.txt qui est obtenu par requete http non traitée ici
         today = datetime.datetime.today()
 
         d = today.strftime("%Y%m%d")
-        
+
         with open('output.txt', 'r', encoding="utf8") as f:
             find = str.format("DTSTART:{}", d)
             data = f.readlines()
@@ -34,13 +21,13 @@ class Cours():
 
         return day
 
-    def format(day):  # formate chaque cours du jour en couple (heure de rappel, contenu du message à envoyer)
+    def format(day):  # formate chaque cours du jour en couple (heure de début, contenu du message à envoyer)
         msg = []
         for cours in day:
             heure = cours[0][17:21]
             matiere = cours[1][8:-1]
             salle = cours[2][9:-1]
-            msg.append([Cours.heuremoins10(heure), str.format(
+            msg.append([heure, str.format(
                 "Tu as {} en {} à {}h{}", matiere, salle, heure[0:2], heure[2:4])])
 
         return(msg)
